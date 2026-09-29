@@ -1,7 +1,263 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#07111d"><meta name="description" content="Metro Rush X — original 3D endless runner game"><title>Metro Rush X — Endless Runner</title><link rel="stylesheet" href="./src/style.css"></head><body><div id="game"></div>
-<div id="hud"><div class="topbar"><div class="pill">SCORE <b id="score">0</b></div><div class="pill">🪙 <b id="coins">0</b></div><div class="pill">BANK <b id="bank">0</b></div><div class="pill">BEST <b id="best">0</b></div><div class="pill">COMBO <b id="combo">x1.0</b></div><button id="pauseBtn" class="iconBtn">Ⅱ</button></div><div class="subbar"><span id="distance">0m</span><div id="powerups" class="powerups"></div><button id="shopBtn">SHOP</button><button id="missionBtn">MISSIONS</button><button id="dailyBtn">DAILY</button><button id="mapBtn">WORLD</button><button id="settingsBtn">⚙</button></div><div id="centerMessage" class="centerMessage hidden"></div>
-<div id="startScreen" class="overlay"><div class="card"><div class="logo">METRO <span>RUSH</span> X</div><p>Run • Jump • Slide • Switch lanes • Grind trains • Collect • Escape</p><div class="characterRow"><button class="char active" data-char="runner">Runner</button><button class="char" data-char="girl">Street Girl</button><button class="char" data-char="robot">Robo-X</button><button class="char" data-char="ninja">Night Ninja</button><button class="char" data-char="skater">Street Skater</button><button class="char" data-char="racer">Turbo Racer</button><button class="char" data-char="dj">Neon DJ</button><button class="char" data-char="explorer">Explorer</button><button class="char" data-char="cyber">Cyber Scout</button><button class="char" data-char="biker">Metro Biker</button></div><button id="startBtn" class="primary">START RUN</button><small>Keyboard: A/D or ←/→ • W/Space/↑ Jump • S/↓ Slide • P Pause • M Music<br>Mobile: swipe left/right/up/down</small></div></div>
-<div id="gameOver" class="overlay hidden"><div class="card"><h2>RUN OVER</h2><p id="finalStats"></p><button id="restartBtn" class="primary">RUN AGAIN</button></div></div>
-<div id="shop" class="modal hidden"><div class="modalCard"><button class="close" id="closeShop">×</button><h2>SHOP</h2><p>Characters, boards & abilities • Coins: <b id="shopCoins">0</b></p><div id="shopItems" class="shopGrid"></div></div></div>
-<div id="world" class="modal hidden"><div class="modalCard"><button class="close" id="closeWorld">×</button><h2>WORLD TOUR</h2><p>Original themed zones for Metro Rush X.</p><div class="worldGrid"><button>METRO CITY</button><button>NEON NIGHT</button><button>DESERT LINE</button><button>SNOW RUN</button><button>JUNGLE RAIL</button><button>SKY BRIDGE</button><button>BEACH EXPRESS</button><button>FUTURE LOOP</button></div></div></div><div id="missions" class="modal hidden"><div class="modalCard"><button class="close" id="closeMissions">×</button><h2>MISSIONS</h2><div id="missionList"></div></div></div>
-<div id="settings" class="modal hidden"><div class="modalCard"><button class="close" id="closeSettings">×</button><h2>SETTINGS</h2><label>Graphics <select id="quality"><option value="high">High</option><option value="medium">Medium</option></select></label><button id="mute" class="wide">Sound: ON</button><button onclick="toggleMusic()" class="wide">Music ON/OFF</button></div></div><div id="toast"></div></div><script type="module" src="./src/game.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#07111d">
+  <meta name="description" content="Metro Rush X — original 3D endless runner game">
+  <title>Metro Rush X — Endless Runner</title>
+
+  <!-- CSS is in the root of the GitHub repository -->
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+  <!-- GAME CANVAS / 3D WORLD -->
+  <div id="game"></div>
+
+  <!-- HUD -->
+  <div id="hud">
+
+    <div class="topbar">
+      <div class="pill">
+        SCORE <b id="score">0</b>
+      </div>
+
+      <div class="pill">
+        🪙 <b id="coins">0</b>
+      </div>
+
+      <div class="pill">
+        BANK <b id="bank">0</b>
+      </div>
+
+      <div class="pill">
+        BEST <b id="best">0</b>
+      </div>
+
+      <div class="pill">
+        COMBO <b id="combo">x1.0</b>
+      </div>
+
+      <button id="pauseBtn" class="iconBtn" type="button">Ⅱ</button>
+    </div>
+
+    <div class="subbar">
+      <span id="distance">0m</span>
+
+      <div id="powerups" class="powerups"></div>
+
+      <button id="shopBtn" type="button">SHOP</button>
+      <button id="missionBtn" type="button">MISSIONS</button>
+      <button id="dailyBtn" type="button">DAILY</button>
+      <button id="mapBtn" type="button">WORLD</button>
+      <button id="settingsBtn" type="button">⚙</button>
+    </div>
+
+    <div id="centerMessage" class="centerMessage hidden"></div>
+
+  </div>
+
+
+  <!-- START SCREEN -->
+  <div id="startScreen" class="overlay">
+
+    <div class="card">
+
+      <div class="logo">
+        METRO <span>RUSH</span> X
+      </div>
+
+      <p>
+        Run • Jump • Slide • Switch lanes • Grind trains • Collect • Escape
+      </p>
+
+      <div class="characterRow">
+
+        <button class="char active" data-char="runner" type="button">
+          Runner
+        </button>
+
+        <button class="char" data-char="girl" type="button">
+          Street Girl
+        </button>
+
+        <button class="char" data-char="robot" type="button">
+          Robo-X
+        </button>
+
+        <button class="char" data-char="ninja" type="button">
+          Night Ninja
+        </button>
+
+        <button class="char" data-char="skater" type="button">
+          Street Skater
+        </button>
+
+        <button class="char" data-char="racer" type="button">
+          Turbo Racer
+        </button>
+
+        <button class="char" data-char="dj" type="button">
+          Neon DJ
+        </button>
+
+        <button class="char" data-char="explorer" type="button">
+          Explorer
+        </button>
+
+        <button class="char" data-char="cyber" type="button">
+          Cyber Scout
+        </button>
+
+        <button class="char" data-char="biker" type="button">
+          Metro Biker
+        </button>
+
+      </div>
+
+      <button id="startBtn" class="primary" type="button">
+        START RUN
+      </button>
+
+      <small>
+        Keyboard: A/D or ←/→ • W/Space/↑ Jump • S/↓ Slide • P Pause • M Music
+        <br>
+        Mobile: swipe left/right/up/down
+      </small>
+
+    </div>
+
+  </div>
+
+
+  <!-- GAME OVER -->
+  <div id="gameOver" class="overlay hidden">
+
+    <div class="card">
+
+      <h2>RUN OVER</h2>
+
+      <p id="finalStats"></p>
+
+      <button id="restartBtn" class="primary" type="button">
+        RUN AGAIN
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- SHOP -->
+  <div id="shop" class="modal hidden">
+
+    <div class="modalCard">
+
+      <button class="close" id="closeShop" type="button">×</button>
+
+      <h2>SHOP</h2>
+
+      <p>
+        Characters, boards & abilities •
+        Coins: <b id="shopCoins">0</b>
+      </p>
+
+      <div id="shopItems" class="shopGrid"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- WORLD TOUR -->
+  <div id="world" class="modal hidden">
+
+    <div class="modalCard">
+
+      <button class="close" id="closeWorld" type="button">×</button>
+
+      <h2>WORLD TOUR</h2>
+
+      <p>
+        Original themed zones for Metro Rush X.
+      </p>
+
+      <div class="worldGrid">
+
+        <button type="button">METRO CITY</button>
+        <button type="button">NEON NIGHT</button>
+        <button type="button">DESERT LINE</button>
+        <button type="button">SNOW RUN</button>
+        <button type="button">JUNGLE RAIL</button>
+        <button type="button">SKY BRIDGE</button>
+        <button type="button">BEACH EXPRESS</button>
+        <button type="button">FUTURE LOOP</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- MISSIONS -->
+  <div id="missions" class="modal hidden">
+
+    <div class="modalCard">
+
+      <button class="close" id="closeMissions" type="button">
+        ×
+      </button>
+
+      <h2>MISSIONS</h2>
+
+      <div id="missionList"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- SETTINGS -->
+  <div id="settings" class="modal hidden">
+
+    <div class="modalCard">
+
+      <button class="close" id="closeSettings" type="button">
+        ×
+      </button>
+
+      <h2>SETTINGS</h2>
+
+      <label for="quality">
+        Graphics
+        <select id="quality">
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+        </select>
+      </label>
+
+      <button id="mute" class="wide" type="button">
+        Sound: ON
+      </button>
+
+      <button id="musicBtn" class="wide" type="button">
+        Music ON/OFF
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- TOAST MESSAGE -->
+  <div id="toast"></div>
+
+
+  <!-- JavaScript is also expected in the ROOT -->
+  <script type="module" src="./game.js"></script>
+
+</body>
+</html>
