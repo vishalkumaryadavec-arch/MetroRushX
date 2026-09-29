@@ -2,24 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+  >
+
   <meta name="theme-color" content="#07111d">
-  <meta name="description" content="Metro Rush X — original 3D endless runner game">
+  <meta
+    name="description"
+    content="Metro Rush X — Original 3D endless runner game with metro trains, characters, hoverboards, power-ups and missions."
+  >
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
   <title>Metro Rush X — Endless Runner</title>
 
-  <!-- CSS is in the root of the GitHub repository -->
+  <!-- CSS is in the ROOT of the GitHub repository -->
   <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 
-  <!-- GAME CANVAS / 3D WORLD -->
+  <!-- =========================
+       GAME WORLD
+  ========================== -->
   <div id="game"></div>
 
-  <!-- HUD -->
+
+  <!-- =========================
+       HUD
+  ========================== -->
   <div id="hud">
 
     <div class="topbar">
+
       <div class="pill">
         SCORE <b id="score">0</b>
       </div>
@@ -40,28 +59,69 @@
         COMBO <b id="combo">x1.0</b>
       </div>
 
-      <button id="pauseBtn" class="iconBtn" type="button">Ⅱ</button>
+      <button
+        id="pauseBtn"
+        class="iconBtn"
+        type="button"
+        aria-label="Pause game"
+      >
+        Ⅱ
+      </button>
+
     </div>
 
+
     <div class="subbar">
+
       <span id="distance">0m</span>
 
       <div id="powerups" class="powerups"></div>
 
-      <button id="shopBtn" type="button">SHOP</button>
-      <button id="missionBtn" type="button">MISSIONS</button>
-      <button id="dailyBtn" type="button">DAILY</button>
-      <button id="mapBtn" type="button">WORLD</button>
-      <button id="settingsBtn" type="button">⚙</button>
-    </div>
+      <button id="shopBtn" type="button">
+        SHOP
+      </button>
 
-    <div id="centerMessage" class="centerMessage hidden"></div>
+      <button id="missionBtn" type="button">
+        MISSIONS
+      </button>
+
+      <button id="dailyBtn" type="button">
+        DAILY
+      </button>
+
+      <button id="mapBtn" type="button">
+        WORLD
+      </button>
+
+      <button
+        id="settingsBtn"
+        type="button"
+        aria-label="Settings"
+      >
+        ⚙
+      </button>
+
+    </div>
 
   </div>
 
 
-  <!-- START SCREEN -->
-  <div id="startScreen" class="overlay">
+  <!-- =========================
+       CENTER MESSAGE
+  ========================== -->
+  <div
+    id="centerMessage"
+    class="centerMessage hidden"
+  ></div>
+
+
+  <!-- =========================
+       START SCREEN
+  ========================== -->
+  <div
+    id="startScreen"
+    class="overlay"
+  >
 
     <div class="card">
 
@@ -73,6 +133,8 @@
         Run • Jump • Slide • Switch lanes • Grind trains • Collect • Escape
       </p>
 
+
+      <!-- CHARACTER SELECT -->
       <div class="characterRow">
 
         <button class="char active" data-char="runner" type="button">
@@ -117,9 +179,15 @@
 
       </div>
 
-      <button id="startBtn" class="primary" type="button">
+
+      <button
+        id="startBtn"
+        class="primary"
+        type="button"
+      >
         START RUN
       </button>
+
 
       <small>
         Keyboard: A/D or ←/→ • W/Space/↑ Jump • S/↓ Slide • P Pause • M Music
@@ -132,8 +200,13 @@
   </div>
 
 
-  <!-- GAME OVER -->
-  <div id="gameOver" class="overlay hidden">
+  <!-- =========================
+       GAME OVER
+  ========================== -->
+  <div
+    id="gameOver"
+    class="overlay hidden"
+  >
 
     <div class="card">
 
@@ -141,7 +214,11 @@
 
       <p id="finalStats"></p>
 
-      <button id="restartBtn" class="primary" type="button">
+      <button
+        id="restartBtn"
+        class="primary"
+        type="button"
+      >
         RUN AGAIN
       </button>
 
@@ -150,33 +227,60 @@
   </div>
 
 
-  <!-- SHOP -->
-  <div id="shop" class="modal hidden">
+  <!-- =========================
+       SHOP
+  ========================== -->
+  <div
+    id="shop"
+    class="modal hidden"
+  >
 
     <div class="modalCard">
 
-      <button class="close" id="closeShop" type="button">×</button>
+      <button
+        class="close"
+        id="closeShop"
+        type="button"
+        aria-label="Close shop"
+      >
+        ×
+      </button>
 
       <h2>SHOP</h2>
 
       <p>
-        Characters, boards & abilities •
-        Coins: <b id="shopCoins">0</b>
+        Characters, boards & abilities • Coins:
+        <b id="shopCoins">0</b>
       </p>
 
-      <div id="shopItems" class="shopGrid"></div>
+      <div
+        id="shopItems"
+        class="shopGrid"
+      ></div>
 
     </div>
 
   </div>
 
 
-  <!-- WORLD TOUR -->
-  <div id="world" class="modal hidden">
+  <!-- =========================
+       WORLD TOUR
+  ========================== -->
+  <div
+    id="world"
+    class="modal hidden"
+  >
 
     <div class="modalCard">
 
-      <button class="close" id="closeWorld" type="button">×</button>
+      <button
+        class="close"
+        id="closeWorld"
+        type="button"
+        aria-label="Close world"
+      >
+        ×
+      </button>
 
       <h2>WORLD TOUR</h2>
 
@@ -202,12 +306,22 @@
   </div>
 
 
-  <!-- MISSIONS -->
-  <div id="missions" class="modal hidden">
+  <!-- =========================
+       MISSIONS
+  ========================== -->
+  <div
+    id="missions"
+    class="modal hidden"
+  >
 
     <div class="modalCard">
 
-      <button class="close" id="closeMissions" type="button">
+      <button
+        class="close"
+        id="closeMissions"
+        type="button"
+        aria-label="Close missions"
+      >
         ×
       </button>
 
@@ -220,30 +334,81 @@
   </div>
 
 
-  <!-- SETTINGS -->
-  <div id="settings" class="modal hidden">
+  <!-- =========================
+       DAILY
+  ========================== -->
+  <div
+    id="daily"
+    class="modal hidden"
+  >
 
     <div class="modalCard">
 
-      <button class="close" id="closeSettings" type="button">
+      <button
+        class="close"
+        id="closeDaily"
+        type="button"
+        aria-label="Close daily"
+      >
+        ×
+      </button>
+
+      <h2>DAILY REWARD</h2>
+
+      <div id="dailyContent"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       SETTINGS
+  ========================== -->
+  <div
+    id="settings"
+    class="modal hidden"
+  >
+
+    <div class="modalCard">
+
+      <button
+        class="close"
+        id="closeSettings"
+        type="button"
+        aria-label="Close settings"
+      >
         ×
       </button>
 
       <h2>SETTINGS</h2>
 
+
       <label for="quality">
         Graphics
+
         <select id="quality">
           <option value="high">High</option>
           <option value="medium">Medium</option>
         </select>
+
       </label>
 
-      <button id="mute" class="wide" type="button">
+
+      <button
+        id="mute"
+        class="wide"
+        type="button"
+      >
         Sound: ON
       </button>
 
-      <button id="musicBtn" class="wide" type="button">
+
+      <button
+        id="musicBtn"
+        class="wide"
+        type="button"
+      >
         Music ON/OFF
       </button>
 
@@ -252,12 +417,20 @@
   </div>
 
 
-  <!-- TOAST MESSAGE -->
+  <!-- =========================
+       TOAST MESSAGE
+  ========================== -->
   <div id="toast"></div>
 
 
-  <!-- JavaScript is also expected in the ROOT -->
-  <script type="module" src="./game.js"></script>
+  <!-- =========================
+       JAVASCRIPT
+       game.js is in ROOT
+  ========================== -->
+  <script
+    type="module"
+    src="./game.js"
+  ></script>
 
 </body>
 </html>
